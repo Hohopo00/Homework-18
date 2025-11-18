@@ -33,6 +33,7 @@ struct Player {
     int yellow_cards;
 };
 
+
 void print_center(const char* text);
 int get_age(int birth_year);
 int check_player(struct Player p);
@@ -64,7 +65,6 @@ int check_player(struct Player p) {
     }
 
     
-
     if (p.games_played > 0) {
         float cards_per_10_games = (float)p.yellow_cards / p.games_played * 10;
         if (cards_per_10_games <= 1.0) {
@@ -101,7 +101,9 @@ void input_player(struct Player* p) {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
-,void print_player(struct Player p) {
+
+
+void print_player(struct Player p) {
     printf("\n=== Данные игрока ===\n");
     printf("Фамилия: %s\n", p.surname);
     printf("Дата рождения: %02d.%02d.%d\n", p.birth_date.day, p.birth_date.month, p.birth_date.year);
@@ -128,6 +130,8 @@ void input_player(struct Player* p) {
 int main() {
     setlocale(LC_ALL, "RUS");
 
+    printf("=== Программа учета футболистов ===\n");
+    printf("Условие: старше 20 лет и (0-1 карточка ИЛИ не более 1 карточки за 10 игр)\n");
 
     struct Player players[MAX_PLAYERS];
     int count = 0;
