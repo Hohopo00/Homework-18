@@ -20,38 +20,38 @@ struct Player {
     int yellow_cards;
 };
 
-// Объявления функций
 void print_center(const char* text);
 int get_age(int birth_year);
 int check_player(struct Player p);
 void input_player(struct Player* p);
 void print_player(struct Player p);
 
-// Простая функция для центрированного вывода
+
 void print_center(const char* text) {
     printf("    %s\n", text);
 }
 
-// Функция для вычисления возраста
+
 int get_age(int birth_year) {
     return 2025 - birth_year;
 }
 
-// Проверка условия - ИСПРАВЛЕННАЯ ВЕРСИЯ
+
 int check_player(struct Player p) {
     int age = get_age(p.birth_date.year);
 
-    // Проверка возраста (старше 20 лет)
+    
     if (age <= 20) {
         return 0;
     }
 
-    // Игрок подходит если у него 0 или 1 желтая карточка
+    
     if (p.yellow_cards <= 1) {
         return 1;
     }
 
-    // Если карточек больше 1, проверяем соотношение (не более 1 карточки за 10 игр)
+    
+
     if (p.games_played > 0) {
         float cards_per_10_games = (float)p.yellow_cards / p.games_played * 10;
         if (cards_per_10_games <= 1.0) {
@@ -62,78 +62,74 @@ int check_player(struct Player p) {
     return 0;
 }
 
-// Ввод данных игрока
-void input_player(struct Player* p) {
-    printf("\nВвод данных игрока:\n");
 
-    printf("Фамилия: ");
+void input_player(struct Player* p) {
+    printf("\nР’РІРѕРґ РґР°РЅРЅС‹С… РёРіСЂРѕРєР°:\n");
+
+    printf("Р¤Р°РјРёР»РёСЏ: ");
     scanf(" %[^\n]", p->surname);
 
-    printf("Дата рождения (день месяц год): ");
+    printf("Р”Р°С‚Р° СЂРѕР¶РґРµРЅРёСЏ (РґРµРЅСЊ РјРµСЃСЏС† РіРѕРґ): ");
     scanf("%d %d %d", &p->birth_date.day, &p->birth_date.month, &p->birth_date.year);
 
-    printf("Город рождения: ");
+    printf("Р“РѕСЂРѕРґ СЂРѕР¶РґРµРЅРёСЏ: ");
     scanf(" %[^\n]", p->birth_city);
 
-    printf("Амплуа: ");
+    printf("РђРјРїР»СѓР°: ");
     scanf(" %[^\n]", p->role);
 
-    printf("Количество игр: ");
+    printf("РљРѕР»РёС‡РµСЃС‚РІРѕ РёРіСЂ: ");
     scanf("%d", &p->games_played);
 
-    printf("Количество желтых карточек: ");
+    printf("РљРѕР»РёС‡РµСЃС‚РІРѕ Р¶РµР»С‚С‹С… РєР°СЂС‚РѕС‡РµРє: ");
     scanf("%d", &p->yellow_cards);
 
-    // Очистка буфера
+    
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
+,void print_player(struct Player p) {
+    printf("\n=== Р”Р°РЅРЅС‹Рµ РёРіСЂРѕРєР° ===\n");
+    printf("Р¤Р°РјРёР»РёСЏ: %s\n", p.surname);
+    printf("Р”Р°С‚Р° СЂРѕР¶РґРµРЅРёСЏ: %02d.%02d.%d\n", p.birth_date.day, p.birth_date.month, p.birth_date.year);
+    printf("Р’РѕР·СЂР°СЃС‚: %d Р»РµС‚\n", get_age(p.birth_date.year));
+    printf("Р“РѕСЂРѕРґ СЂРѕР¶РґРµРЅРёСЏ: %s\n", p.birth_city);
+    printf("РђРјРїР»СѓР°: %s\n", p.role);
+    printf("РРіСЂ: %d\n", p.games_played);
+    printf("Р–РµР»С‚С‹С… РєР°СЂС‚РѕС‡РµРє: %d\n", p.yellow_cards);
 
-// Вывод данных игрока
-void print_player(struct Player p) {
-    printf("\n=== Данные игрока ===\n");
-    printf("Фамилия: %s\n", p.surname);
-    printf("Дата рождения: %02d.%02d.%d\n", p.birth_date.day, p.birth_date.month, p.birth_date.year);
-    printf("Возраст: %d лет\n", get_age(p.birth_date.year));
-    printf("Город рождения: %s\n", p.birth_city);
-    printf("Амплуа: %s\n", p.role);
-    printf("Игр: %d\n", p.games_played);
-    printf("Желтых карточек: %d\n", p.yellow_cards);
-
-    // Показываем дополнительную информацию
+    
     if (p.games_played > 0) {
         float cards_rate = (float)p.yellow_cards / p.games_played * 10;
-        printf("Карточек за 10 игр: %.2f\n", cards_rate);
+        printf("РљР°СЂС‚РѕС‡РµРє Р·Р° 10 РёРіСЂ: %.2f\n", cards_rate);
     }
 
     if (check_player(p)) {
-        printf("Соответствует условию: ДА\n");
+        printf("РЎРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ СѓСЃР»РѕРІРёСЋ: Р”Рђ\n");
     }
     else {
-        printf("Соответствует условию: НЕТ\n");
+        printf("РЎРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ СѓСЃР»РѕРІРёСЋ: РќР•Рў\n");
     }
 }
 
 int main() {
     setlocale(LC_ALL, "RUS");
 
-    printf("=== Программа учета футболистов ===\n");
-    printf("Условие: старше 20 лет и (0-1 карточка ИЛИ не более 1 карточки за 10 игр)\n");
 
     struct Player players[MAX_PLAYERS];
     int count = 0;
     int choice;
 
     do {
-        printf("\n=== Меню ===\n");
-        printf("1. Добавить игрока\n");
-        printf("2. Показать всех игроков\n");
-        printf("3. Показать игроков по условию\n");
-        printf("4. Выход\n");
-        printf("Выберите: ");
+        printf("\n=== РњРµРЅСЋ ===\n");
+        printf("1. Р”РѕР±Р°РІРёС‚СЊ РёРіСЂРѕРєР°\n");
+        printf("2. РџРѕРєР°Р·Р°С‚СЊ РІСЃРµС… РёРіСЂРѕРєРѕРІ\n");
+        printf("3. РџРѕРєР°Р·Р°С‚СЊ РёРіСЂРѕРєРѕРІ РїРѕ СѓСЃР»РѕРІРёСЋ\n");
+        printf("4. Р’С‹С…РѕРґ\n");
+        printf("Р’С‹Р±РµСЂРёС‚Рµ: ");
         scanf("%d", &choice);
 
-        // Очистка буфера после выбора меню
+        
         int c;
         while ((c = getchar()) != '\n' && c != EOF);
 
@@ -142,16 +138,16 @@ int main() {
             if (count < MAX_PLAYERS) {
                 input_player(&players[count]);
                 count++;
-                printf("Игрок добавлен!\n");
+                printf("РРіСЂРѕРє РґРѕР±Р°РІР»РµРЅ!\n");
             }
             else {
-                printf("Достигнут максимум игроков!\n");
+                printf("Р”РѕСЃС‚РёРіРЅСѓС‚ РјР°РєСЃРёРјСѓРј РёРіСЂРѕРєРѕРІ!\n");
             }
             break;
 
         case 2:
             if (count == 0) {
-                printf("Нет игроков!\n");
+                printf("РќРµС‚ РёРіСЂРѕРєРѕРІ!\n");
             }
             else {
                 for (int i = 0; i < count; i++) {
@@ -162,11 +158,11 @@ int main() {
 
         case 3:
             if (count == 0) {
-                printf("Нет игроков!\n");
+                printf("РќРµС‚ РёРіСЂРѕРєРѕРІ!\n");
             }
             else {
-                printf("\n=== Игроки по условию ===\n");
-                printf("(старше 20 лет и 0-1 карточка или не более 1 карточки за 10 игр)\n");
+                printf("\n=== РРіСЂРѕРєРё РїРѕ СѓСЃР»РѕРІРёСЋ ===\n");
+                printf("(СЃС‚Р°СЂС€Рµ 20 Р»РµС‚ Рё 0-1 РєР°СЂС‚РѕС‡РєР° РёР»Рё РЅРµ Р±РѕР»РµРµ 1 РєР°СЂС‚РѕС‡РєРё Р·Р° 10 РёРіСЂ)\n");
 
                 int found = 0;
                 for (int i = 0; i < count; i++) {
@@ -177,20 +173,20 @@ int main() {
                 }
 
                 if (!found) {
-                    printf("Не найдено игроков по условию.\n");
+                    printf("РќРµ РЅР°Р№РґРµРЅРѕ РёРіСЂРѕРєРѕРІ РїРѕ СѓСЃР»РѕРІРёСЋ.\n");
                 }
                 else {
-                    printf("Найдено игроков: %d\n", found);
+                    printf("РќР°Р№РґРµРЅРѕ РёРіСЂРѕРєРѕРІ: %d\n", found);
                 }
             }
             break;
 
         case 4:
-            printf("Выход из программы.\n");
+            printf("Р’С‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹.\n");
             break;
 
         default:
-            printf("Неверный выбор!\n");
+            printf("РќРµРІРµСЂРЅС‹Р№ РІС‹Р±РѕСЂ!\n");
         }
 
     } while (choice != 4);
